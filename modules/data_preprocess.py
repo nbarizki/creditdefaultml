@@ -148,7 +148,7 @@ class LoanDataMissingHandler(BaseEstimator, TransformerMixin):
         self.X = X
         # mths_since_last_record
         rec_condition_1 = (self.X.mths_since_last_record.isna()) & (self.X.pub_rec == 0)
-        self._perform(rec_condition_1, 'mths_since_last_record', 500)
+        self._perform(rec_condition_1, 'mths_since_last_record', 300)
         rec_condition_2 = (self.X.mths_since_last_record.isna()) & (self.X.pub_rec > 0)
         self._perform(rec_condition_2, 'mths_since_last_record', 1)
         rec_condition_3 = (self.X.mths_since_last_record.isna()) & (self.X.pub_rec.isna())
@@ -158,7 +158,7 @@ class LoanDataMissingHandler(BaseEstimator, TransformerMixin):
             (self.X.mths_since_last_delinq.isna())\
             & (self.X.delinq_2yrs == 0)\
             & (self.X.acc_now_delinq == 0)
-        self._perform(last_delinq_condition_1, 'mths_since_last_delinq', 500)
+        self._perform(last_delinq_condition_1, 'mths_since_last_delinq', 300)
         last_delinq_condition_2 = \
             (self.X.mths_since_last_delinq.isna())\
             & (self.X.delinq_2yrs > 0)\
@@ -183,7 +183,7 @@ class LoanDataMissingHandler(BaseEstimator, TransformerMixin):
             (self.X.mths_since_last_delinq == 0)\
             & (self.X.delinq_2yrs == 0)\
             & (self.X.acc_now_delinq == 0)
-        self._perform(last_delinq_condition_6, 'mths_since_last_delinq', 500)
+        self._perform(last_delinq_condition_6, 'mths_since_last_delinq', 300)
         last_delinq_condition_7 = \
             (self.X.mths_since_last_delinq.isna())\
             & (self.X.delinq_2yrs.isna())\
@@ -252,7 +252,7 @@ class LoanDataMissingHandler(BaseEstimator, TransformerMixin):
             (self.X.open_il_12m.isna() | self.X.open_il_24m.isna())\
             & (self.X.mths_since_rcnt_il.isna())\
             & (self.X.total_bal_il == 0)
-        self._perform(open_il_condition_1, 'mths_since_rcnt_il', 500)
+        self._perform(open_il_condition_1, 'mths_since_rcnt_il', 300)
         self._perform(open_il_condition_1, 'open_il_12m', 0)
         self._perform(open_il_condition_1, 'open_il_24m', 0)
         open_il_condition_2 = \
@@ -271,7 +271,7 @@ class LoanDataMissingHandler(BaseEstimator, TransformerMixin):
             & (self.X.total_bal_il.isna())
         self._perform(open_il_condition_4, 'open_il_12m', 0) 
         self._perform(open_il_condition_4, 'open_il_24m', 0) 
-        self._perform(open_il_condition_4, 'mths_since_rcnt_il', 500) 
+        self._perform(open_il_condition_4, 'mths_since_rcnt_il', 300) 
         self._perform(open_il_condition_4, 'total_bal_il', 0)
         # total_bal_il
         bal_il_condition_1 = \
@@ -342,12 +342,12 @@ class LoanDataMissingHandler(BaseEstimator, TransformerMixin):
                 self.X.loc[:, feature] = self.X.loc[:, feature].fillna(0)
             except KeyError:
                 continue
-        replace_500 = [
+        replace_300 = [
             'mths_since_rcnt_il', 'mths_since_last_record', 'mths_since_last_major_derog', 'mths_since_last_delinq',
             ]
-        for feature in replace_500:
+        for feature in replace_300:
             try:
-                self.X.loc[:, feature] = self.X.loc[:, feature].fillna(500)
+                self.X.loc[:, feature] = self.X.loc[:, feature].fillna(300)
             except KeyError:
                 continue
         label = self.X.loan_category.values
