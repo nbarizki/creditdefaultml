@@ -39,12 +39,15 @@ class LoanDataPreprocess(BaseEstimator, TransformerMixin):
             'initial_list_status', 'application_type', 'verification_status_joint'
             ]
         self.emp_length_order_ = [
-            '< 1 year', '1 year', '2 years', '3 years', '4 years', 
-            '5 years', '6 years', '7 years', '8 years', '9 years', '10+ years'
+            'less 1 year', '1 year', '2 years', '3 years', '4 years', 
+            '5 years', '6 years', '7 years', '8 years', '9 years', 'more 10 years'
             ]
         return self
         
     def transform(self, X, y=None):
+        # replace ambiguous
+        X.loc[X.emp_length == '< 1 year', 'emp_length'] = 'less 1 year'
+        X.loc[X.emp_length == '10+ years', 'emp_length'] = 'more 10 years'
         # numerical datatype casting
         for int_feature in self.int_features_ :
             X.loc[:, int_feature] = X.loc[:, int_feature].astype('int64', errors='ignore')
