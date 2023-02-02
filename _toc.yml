@@ -1,0 +1,9 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: README
+chapters:
+- file: 1_Dataset_indentification_and_preprocessing
+- file: 2_Data_exploration
+- file: 3_Model_development
